@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiProxy", "WebApiProxy\WebApiProxy.csproj", "{79CDFAAF-56E6-4369-983C-96A590CC1C6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.ServicesLayer", "01.ServicesLayer", "{1A2FC8EC-2285-44A4-B213-106FD6890FA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.BusinessLayer", "02.BusinessLayer", "{D819F68F-17E0-469E-A705-8B149F3FEFEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.DataLayer", "03.DataLayer", "{77B6DD56-9B5D-4C93-9CBF-A76EF97D2944}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.CrossLayer", "04.CrossLayer", "{6FB3B584-0078-470E-B88F-B435D9469BBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiProxy.Data", "WebApiProxy.Data\WebApiProxy.Data.csproj", "{0708DA51-45B2-46FB-BAC1-2FF7B42598F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiProxy.Business", "WebApiProxy.Business\WebApiProxy.Business.csproj", "{75E3367E-277E-4D50-969A-A3F859F2E973}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79CDFAAF-56E6-4369-983C-96A590CC1C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79CDFAAF-56E6-4369-983C-96A590CC1C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79CDFAAF-56E6-4369-983C-96A590CC1C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79CDFAAF-56E6-4369-983C-96A590CC1C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0708DA51-45B2-46FB-BAC1-2FF7B42598F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0708DA51-45B2-46FB-BAC1-2FF7B42598F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0708DA51-45B2-46FB-BAC1-2FF7B42598F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0708DA51-45B2-46FB-BAC1-2FF7B42598F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E3367E-277E-4D50-969A-A3F859F2E973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E3367E-277E-4D50-969A-A3F859F2E973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E3367E-277E-4D50-969A-A3F859F2E973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E3367E-277E-4D50-969A-A3F859F2E973}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{79CDFAAF-56E6-4369-983C-96A590CC1C6E} = {1A2FC8EC-2285-44A4-B213-106FD6890FA5}
+		{0708DA51-45B2-46FB-BAC1-2FF7B42598F1} = {6FB3B584-0078-470E-B88F-B435D9469BBE}
+		{75E3367E-277E-4D50-969A-A3F859F2E973} = {D819F68F-17E0-469E-A705-8B149F3FEFEF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEDA5D7E-48EA-40AF-9A45-4434F1C24153}
+	EndGlobalSection
+EndGlobal
