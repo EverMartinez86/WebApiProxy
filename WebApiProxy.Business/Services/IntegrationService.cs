@@ -32,11 +32,12 @@ namespace WebApiProxy.Business.Services
             _timeSpan = int.Parse(configuration["Backend:timeSpan"]);
         }
 
-        public async Task<dynamic> ExecuteEndPoint(HttpRequest input, string endPoint, dynamic requestBody)
+        public async Task<ResponseOut> ExecuteEndPoint(HttpRequest input, string endPoint, dynamic requestBody)
         {
-            dynamic output;
+            ResponseOut output = new ResponseOut();
             string requestUrl, token = string.Empty, newPath = string.Empty;
             var verb = HttpRequestType.GET;
+            object responseContent;
 
             try
             {
@@ -50,52 +51,84 @@ namespace WebApiProxy.Business.Services
                 }
                 else 
                 {
-                    endPoint = endPoint.Replace("%2F", "/");
+                    if (endPoint.Contains('?'))
+                    {
+                        endPoint = endPoint.Replace("%2F", "/");
+                    }
+                    else
+                    {
+                        endPoint = string.Concat(endPoint.Replace("%2F", "/"), "?", varQuery.ToString());
+                    }
+
                     requestUrl = _urlBase + endPoint;
                 }
 
-                newPath = requestUrl.Replace(input.Path, "/");
-                
                 if (!string.IsNullOrWhiteSpace(input.Headers["Authorization"]))
                 {
                     token = input.Headers["Authorization"].ToString();
                 }
-                
+
                 string requestMethod = input.Method.ToString();
+
 
                 switch (requestMethod)
                 {
                     case "GET":
-                    {
-                        verb = HttpRequestType.GET;
-                        break;
-                    }
+                        {
+                            verb = HttpRequestType.GET;
+                            break;
+                        }
                     case "POST":
-                    {
-                        verb = HttpRequestType.POST;
-                        break;
-                    }
+                        {
+                            verb = HttpRequestType.POST;
+                            break;
+                        }
+                    case "DELETE":
+                        {
+                            verb = HttpRequestType.DELETE;
+                            break;
+                        }
                 }
 
-                var responde = await Execute(requestBody, newPath, token, verb, _timeSpan);
+                var responde = await Execute(requestBody, requestUrl, token, verb, _timeSpan);
                 var responseBody = responde.Content.ReadAsStringAsync().Result;
                 var expandoObjectConverter = new ExpandoObjectConverter();
 
+                output.statusCode = (int)responde.StatusCode;
                 if (responseBody.StartsWith("["))
                 {
                     if (responseBody.StartsWith("[\""))
                     {
-                        output = JsonConvert.DeserializeObject<List<string>>(responseBody, expandoObjectConverter);
+                        responseContent = JsonConvert.DeserializeObject<List<string>>(responseBody, expandoObjectConverter);
                     }
                     else
                     {
-                        output = JsonConvert.DeserializeObject<List<ExpandoObject>>(responseBody, expandoObjectConverter);
+                        responseContent = JsonConvert.DeserializeObject<List<ExpandoObject>>(responseBody, expandoObjectConverter);
                     }
 
                 }
                 else
                 {
-                    output = JsonConvert.DeserializeObject<ExpandoObject>(responseBody, expandoObjectConverter);
+                    responseContent = JsonConvert.DeserializeObject<ExpandoObject>(responseBody, expandoObjectConverter);
+                }
+
+                switch (responde.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.OK:
+                        output.content = responseContent;
+                        break;
+                    case System.Net.HttpStatusCode.NotFound:
+                        output.content = JsonConvert.SerializeObject(new { message = "Not Found - Url/Method", url = requestUrl });
+                        break;
+                    case System.Net.HttpStatusCode.InternalServerError:
+                        output.content = responseContent;
+                        break;
+                    case System.Net.HttpStatusCode.BadRequest:
+                        output.content = responseContent;
+                        break;
+                    default:
+                        output.content = JsonConvert.SerializeObject(new { message = "Error " + responde.ReasonPhrase, url = requestUrl });
+                        break;
                 }
 
                 _time.Stop();

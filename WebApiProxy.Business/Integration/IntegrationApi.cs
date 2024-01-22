@@ -47,6 +47,9 @@ namespace WebApiProxy.Business.Integration
                 case HttpRequestType.GET:
                     output = await client.GetAsync(endpoint);
                     break;
+                case HttpRequestType.DELETE:
+                    output = await client.DeleteAsync(endpoint);
+                    break;
             }
 
 
